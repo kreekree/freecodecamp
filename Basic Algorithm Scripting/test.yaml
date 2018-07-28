@@ -1,0 +1,124 @@
+--- 
+Mappings: 
+  RegionMap: 
+    eu-west-1: 
+      AMALINUX: ami-e4515e0e
+    us-east-1: 
+      AMALINUX: ami-cfe4b2b0
+    us-west-2: 
+      AMALINUX: ami-0ad99772
+Parameters: 
+  DatabaseMasterUser: 
+    Default: mydbinstance
+    Type: String
+  DatabaseName: 
+    Default: sendy
+    Type: String
+  DatabasePassword: 
+    Default: abcdefg123
+    MinLength: 8
+    NoEcho: true
+    Type: String
+  InstanceSubnets: 
+    Description: "A list of subnet identifiers of Amazon Virtual Private Cloud (Amazon VPCs)"
+    Type: "List<AWS::EC2::Subnet::Id>"
+  SendyURL: 
+    Type: String
+Resources: 
+  AG: 
+    Properties: 
+      AvailabilityZones: ~
+      DesiredCapacity: 1
+      HealthCheckGracePeriod: 900
+      HealthCheckType: ELB
+      LaunchConfigurationName: LC
+      LoadBalancerNames: 
+        - myELB
+      MaxSize: 2
+      MinSize: 1
+      VPCZoneIdentifier: 
+        - 
+          - ","
+          - 
+            - InstanceSubnets
+    Type: "AWS::AutoScaling::AutoScalingGroup"
+  LC: 
+    Properties: 
+      AssociatePublicIpAddress: true
+      ImageId: 
+        - RegionMap
+        - "AWS::Region"
+        - AMALINUX
+      InstanceType: t2.micro
+      KeyName: mindmajixindia
+      SecurityGroups: 
+        - WebSecurityGroup.GroupId
+      UserData: 
+        ? "Fn::Base64"
+        : |
+            #!/bin/bash
+            yum update -y
+            yum install -y httpd24 php70 mysql56-server php70-mysqlnd
+            service httpd start
+            chkconfig httpd on
+            sudo usermod -a -G apache ec2-user
+            sudo chown -R ec2-user:apache /var/www
+            sudo chmod 2775 /var/www
+            find /var/www -type d -exec sudo chmod 2775 {} \;
+            find /var/www -type f -exec sudo chmod 0664 {} \;
+            cd /var/www/html
+    Type: "AWS::AutoScaling::LaunchConfiguration"
+  Route53HostedZone: 
+    Properties: 
+      Name: SendyURL
+    Type: "AWS::Route53::HostedZone"
+  WebSecurityGroup: 
+    Properties: 
+      GroupDescription: "My Web Access SG"
+      GroupName: my-web-access-sg-2
+      SecurityGroupIngress: 
+        - 
+          CidrIp: 0.0.0.0/0
+          FromPort: "80"
+          IpProtocol: tcp
+          ToPort: "80"
+        - 
+          CidrIp: 0.0.0.0/0
+          FromPort: "443"
+          IpProtocol: tcp
+          ToPort: "443"
+        - 
+          CidrIp: 35.227.44.44/0
+          FromPort: "22"
+          IpProtocol: tcp
+          ToPort: "22"
+        - 
+          CidrIp: 0.0.0.0/0
+          FromPort: "3306"
+          IpProtocol: tcp
+          ToPort: "3306"
+    Type: "AWS::EC2::SecurityGroup"
+  myDNSRecord: 
+    DependsOn: Route53HostedZone
+    Properties: 
+      AliasTarget: 
+        DNSName: myELB.DNSName
+        HostedZoneId: myELB.CanonicalHostedZoneNameID
+      Comment: "DNS name for my instance."
+      HostedZoneId: Route53HostedZone
+      Name: SendyURL
+      Type: A
+    Type: "AWS::Route53::RecordSet"
+  myELB: 
+    Properties: 
+      AvailabilityZones: ~
+      CrossZone: true
+      Listeners: 
+        - 
+          InstancePort: "80"
+          LoadBalancerPort: "80"
+          Protocol: HTTP
+      LoadBalancerName: MyLoadBalancer
+      SecurityGroups: 
+        - WebSecurityGroup.GroupId
+    Type: "AWS::ElasticLoadBalancing::LoadBalancer"
