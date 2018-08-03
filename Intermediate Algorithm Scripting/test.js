@@ -1,10 +1,5 @@
-var obj1 = {
-    first: "one"
-}
+var myregex = /^[aeiou]/;
 
-var obj2 = {
-  first: "one"
-}
+str = "pple";
 
-
-console.log(obj1[Object.keys(obj1)]);
+console.log(myregex.test(str));
