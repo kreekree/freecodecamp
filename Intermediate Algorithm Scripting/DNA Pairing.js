@@ -26,12 +26,6 @@ function pairElement(str) {
         }
     }
 
-
-
-
-
-
-
     return pairArray;
   }
   
