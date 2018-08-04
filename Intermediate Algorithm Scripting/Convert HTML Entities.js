@@ -16,8 +16,6 @@ function convertHTML(str) {
         "\"": "quot;"
     }
 
-    
-
     //Convert str to array of characters
    var arrStr = str.split("");
 
