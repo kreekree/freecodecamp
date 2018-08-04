@@ -20,6 +20,7 @@ function sumFibs(num) {
         finArr.splice(i + 2, 1, val);
     }
 
+    // Calulcate the sum of all odd numbers less than num
     for (let i = 0; finArr[i] <= num; i++) {
       if (finArr[i] % 2 === 1) {
         sum = sum + finArr[i];
