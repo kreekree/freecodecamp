@@ -11,16 +11,15 @@ and 3.
 
 The answer here would be 6. */
 
-function smallestCommons(arr) {
-
-    console.log(10 % 4);
+function smallestCommons(myArr) {
 
 
     return null;
+    
   }
   
   
-  smallestCommons([10,5]);
+  console.log(smallestCommons([10,5]));
 
 
 // console.log(smallestCommons([1, 5])); //should return a number.

@@ -9,46 +9,60 @@ The provided number may not be a prime.
 
 function sumPrimes(num) {
 
-    var notPrime = [];
+    var factors = [];
     var notPrimeDeDuped = [];
     var primes = [];
 
     arr = [];
 
+    // Add all numbers less the num to an array to find the factors
     for (let i = 2; i <= num; i++) {
         arr.push(i);
     }
 
-    var extractNonPrimes = function(arr) {
+    // Find the factors add add them to an array called factors
+    var findFactors = function(arr, factors) {
        for (let i = 0; i < arr.length; i++) {
            for (let j = 0; j < arr.length && arr[j] < arr[i]; j++) {
                 if (arr[i] % arr[j] === 0) {
-                    notPrime.push(arr[i]);
+                    factors.push(arr[i]);
                 }
             }
         }
     }
 
-    extractNonPrimes(arr);
-
-    var deduped = notPrime.filter(function(item, index) {
-        return notPrime[index] !== notPrime[index + 1];
-    });
-
-
-    arr.forEach(function(number, index) {
-
-        var bool = deduped.some(function(number2, index2) {
-            return number2 === number;
+    findFactors(arr, factors);
+    console.log(factors);
+    // Remove the duplicate factors and store them in a variable called dedupedFactors
+    var removeDuplicates = function(arr) {
+        return arr.filter(function(item, index) {
+            return arr[index] !== arr[index + 1];
         });
+    }
 
-        if (bool === false) {
-            primes.push(arr[index]);
-        }
+    var dedupedFactors = removeDuplicates(factors);
+
+
+    // Remove the factors from the array of numbers less than num and add them to an array called primes
         
-    });
+        function addPrimes(arr, factors, primeArr) {
 
+            arr.forEach(function(number, index) {
 
+                var bool = factors.some(function(number2, index2) {
+                    return number2 === number;
+                });
+    
+                if (bool === false) {
+                    primeArr.push(arr[index]);
+                }
+            });
+        }
+
+        addPrimes(arr, dedupedFactors, primes);
+        
+
+    //Add all of the prime numbers in the array
     var sum = primes.reduce(function(acc, value) {
         return acc + value;
     });
