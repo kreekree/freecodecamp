@@ -1,5 +1,1 @@
-var myregex = /^[aeiou]/;
-
-str = "pple";
-
-console.log(myregex.test(str));
+console.log(60 % 5);
