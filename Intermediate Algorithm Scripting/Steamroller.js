@@ -5,39 +5,32 @@ function steamrollArray(arr) {
     // I'm a steamroller, baby
     var myArray = [];
     arr.forEach(function(item, index) {
-        
-        if (item.length === undefined) {
-               myArray.push(item);
-           }
-        else if (item.length === 1) {
-            //console.log(item);
-            var myNewArr = [item];
 
-            while (Array.isArray(myNewArr)) {
-                myNewArr = myNewArr[0];
+        function arrayLevels(item, arr) {
+            if (item.length === undefined) {
+                    arr.push(item);
+                }
+            else if (item.length === 1) {
+                var myNewArr = [item];
+    
+                while (Array.isArray(myNewArr)) {
+                    myNewArr = myNewArr[0];
+                }
+                arr.push(myNewArr);
             }
-            myArray.push(myNewArr);
-        } else {
-            item.forEach(function(currentValue, index) {
-                if (currentValue.length === 1) {
-                    //console.log(item);
-                    var myNewArr = [currentValue];
-        
-                    while (Array.isArray(myNewArr)) {
-                        myNewArr = myNewArr[0];
-                    }
-                    myArray.push(myNewArr);
-                } else if (currentValue.length === undefined) {
-                       myArray.push(currentValue);
-                   }
-            });
         }
 
-        
-        
-       // console.log(myArray);
-    });
+        arrayLevels(item, myArray);
 
+        if (item.length > 1) {
+
+            item.forEach(function(currentValue, index) {
+                arrayLevels(currentValue, myArray);
+            });
+        }
+        
+    });
+    
     return myArray;
 
   }
