@@ -30,9 +30,6 @@ function orbitalPeriod(arr) {
 
     });
 
-    
-   // console.log(Math.round(T));
-
     return myArray;
   }
   

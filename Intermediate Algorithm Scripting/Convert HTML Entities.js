@@ -5,15 +5,16 @@ function convertHTML(str) {
     // &colon;&rpar;
 
     // Regular expression used to detect non html characters
-    var myRegex = /[&<>\"\']/;
+    var myRegex = /[&<>\"']/;
+    var myArray = [];
 
     // Store character HTML mappings in obj
     var obj = {
         "&": "&​amp;",
         "<": "&​lt;",
-        ">": "&​gt",
-        "\'": "&​apos;",
-        "\"": "quot;"
+        ">": "&​gt;",
+        "'": "&​apos;",
+        "\"": "&quot;"
     }
 
     //Convert str to array of characters
@@ -21,13 +22,15 @@ function convertHTML(str) {
 
    // Loop through str to find any non HTML characters and replace
     arrStr.forEach(function(letter,index) {
-        if (myRegex.test(letter)) {
-            arrStr.splice(index, 1, obj[letter]);
+        if (!myRegex.test(letter))
+            myArray.push(letter);
+          else {
+            myArray.push(obj[letter]);
         }
     });
 
     // Convert array back to string
-    var convertStr = arrStr.join("");
+    var convertStr = myArray.join("");
 
 
 
