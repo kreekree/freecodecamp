@@ -1,0 +1,15 @@
+color
+font-family
+font-size
+font-family
+border-color
+border-width
+border-style
+border-radius
+width
+background-color
+class elements ------> used .name
+id elements ----> used #name
+padding
+margin
+[attr=value]
