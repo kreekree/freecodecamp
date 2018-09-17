@@ -6,7 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <title>Document</title>
-    <style>
+  <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+  
+  <style>
         body {
             display: flex;
             background: #a9d7d1;
@@ -24,40 +26,56 @@
             background-color: rgb(250, 250, 250);
             border-radius:0.2rem;
             align-self: center;
-            max-width: 1000px;
-            margin: 0px 50px 0px 50px;
+            width: 75%;
+        }
+
+        .form-wrapper {
+            margin: 40px;
         }
 
         #description {
-            display: flex;
-            justify-content: center;
             text-align: center;
-            margin: 20px 20px -10px 20px;
         }
 
-        .elements {
+        .contact-info {
             display: flex;
             flex-direction: column;
             margin:30px 15px;
         }
 
-        #survey-form .elements legend {
+        #survey-form .contact-info legend {
+            margin:30px 15px;
+        }
+
+        .dropdown-1, .text-area{
+          display: flex;
+          flex-direction: column;
+          margin:30px 15px;
+        }
+
+         .dropdown-1 label{
            margin-bottom: 15px;
         }
 
-        .selector {
-          
+        .dropdown-1 #dropdown {
+            width: 145px;
         }
 
-        #dropdown {
-          width: 145px;
+        .dropdown-2 {
+          display: flex;
+          flex-direction: column;
+          margin:30px 15px;
         }
 
-        #radio {
-    
+        .dropdown-2 label{
+           margin-bottom: 15px;
+        }
+        
+        .dropdown-2 #dropdown {
+            width: 145px;
         }
 
-        #survey-form label {
+        .contact-info label {
             margin-bottom: 15px;
         }
 
@@ -73,30 +91,140 @@
             margin: 0px;
         }
 
+        .row-item {
+            display: flex;
+            align-items: center;
+        }
+
+        legend, .text-area  {
+            margin: 30px 15px;
+        }
+
+        textarea {
+            margin-top: 15px;
+            height: 60px;
+        }
+
+        .button {
+            display: flex;
+            justify-content: center;
+        }
+        #submit {
+            background-color:#59ace0;
+            color: white;
+            margin-bottom: 20px;
+            width:92px;
+            height: 40px;
+            border-radius:10%;
+            font-size: 1em;
+        }
+
+        
+
+        @media (min-width: 516px) {
+           
+            .contact-info, .dropdown-1, .dropdown-2 , #radio, .checkbox, .text-area {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                grid-gap: 5px;
+            }
+
+            .contact-info > label {
+               justify-self: end;
+               margin-right: 10px;
+            }
+
+            .contact-info > input {
+               justify-self: stretch;
+               margin-right: 20%;
+            }
+            
+            .dropdown-1 > label {
+                justify-self: end;
+                margin-right: 10px;
+                text-align: right;
+            }
+
+            .dropdown-1 > select {
+                justify-self: start;
+                margin-right: 30px;
+            }
+
+            #radio > legend {
+                text-align: right;
+                justify-self: end;
+                margin: 0px;
+            }
+
+            #radio > .row-items {
+                justify-self: start;
+                align-self: center;
+            }
+            .row-items .row-item {
+                margin-left: 0;
+            }
+
+            .dropdown-2 > label {
+                justify-self: end;
+                text-align: right;
+            }
+
+            .dropdown-2 > select {
+                justify-self: start;
+            }
+
+            .checkbox legend {
+                margin-top: 0;
+                align-self: flex-start;
+                text-align: right;
+            }
+
+            .checkbox .row-items {
+                justify-self: start;
+                margin-left: 0;
+            }
+
+            .text-area label {
+                text-align: right;
+                margin-right: 15px;
+
+            }
+
+            textarea {
+                justify-self: start;
+                margin-top: 0px;
+                width: 200px;
+            }
+
+
+        }
+
     </style>
+    
 </head>
 <body>
     <h1 id="title">Survey Form</h1>
     <div class="wrapper">
-        <div id="description">
-            <p>Let us know how we can improve freeCodeCamp</p>
+        <div class="form-wrapper">
+        <div>
+            <p id="description">Let us know how we can improve freeCodeCamp</p>
         </div>
 
         <form id="survey-form">
-            <div class="elements">
-                <label for="name-label">* Name:</label>
-                <input type="text" id="name" value="Enter your name">
+            <div class="contact-info">
+                <label for="name" id="name-label">* Name:</label>
+                <input type="text" id="name" placeholder="Enter your name"  required>
             </div>
-            <div class="elements">
-                <label for="email-label">* Email:</label>
-                <input type="email" id="email" value="Enter your Email">
+            <div class="contact-info">
+                <label for="email" id="email-label">* Email:</label>
+                <input type="email" id="email" placeholder="Enter your Email"  required >
             </div>
-            <div class="elements">
-                <label for="number-label">* Age:</label>
+            <div class="contact-info">
+                <label for="number" id="number-label">* Age:</label>
                 <input type="number" id="number" placeholder="Age" min="1" max="125" >
             </div>
 
-            <div class="elements">
+            <div class="dropdown-1">
                 <label for="dropdown">Which option best describes your current role?</label>
                 <select id="dropdown">
                     <option value="none" disabled>Select an option</option>
@@ -109,45 +237,116 @@
                 </select>
             </div>
 
-            <div class="elements" id="radio">
+            <div class="recommend" id="radio">
                 <legend>* How likely is that you would recommend freeCodeCamp to a friend?</legend>
-                <div>
-                    <div>
+                <div class="row-items">
+                    <div class="row-item">
                         <input type="radio" id="Definitely" name="recommend" value="Definitely">
                         <label for="Definitely">Definitely</label>
                     </div>
-                    <div>
+                    <div class="row-item">
                         <input type="radio" id="Maybe" name="recommend" value="Maybe">
                         <label for="Definitely">Maybe</label>
                     </div>
-                    <div>
+                    <div class="row-item">
                         <input type="radio" id="Not-Sure" name="recommend" value="Not-Sure">
                         <label for="Not-Sure">Not sure</label>
                     </div>
                 </div>
             </div>
 
+            <div class="dropdown-2">
+                <label for="dropdown">What do you like most in FCC:</label>
+                <select id="dropdown">
+                    <option value="none" selected disabled>Select an option</option>
+                    <option value="Challenges">Challenges</option>
+                    <option value="Projects">Projects</option>
+                    <option value="Community">Community</option>
+                    <option value="Open Source">Open Source</option>
+                    <option value="Other">Other</option>
+                    </option>
+                </select>
+            </div>
+
+            <div class="checkbox">
+                <legend>Things that should be improved in the future
+                    (Check all that apply):</legend>
+                <div class="row-tems">
+                    <div class="row-item">
+                        <input type="checkbox" id="Front-end Projects" name="Front-end Projects" value="Front-end Projects">
+                        <label for="Front-end Projects">Front-end Projects</label>
+                    </div>
+                    
+                    <div class="row-item">
+                        <input type="checkbox" id="Back-end Projects" name="Back-end Projects" value="Back-end Projects">
+                        <label for="Back-end Projects">Back-end Projects</label>
+                    </div>
+
+                    <div class="row-item">
+                        <input type="checkbox" id="Data Visualization" name="Data Visualization" value="Data Visualization">
+                        <label for="Data Visualization">Data Visualization</label>
+                    </div>
+
+                    <div class="row-item">
+                        <input type="checkbox" id="Challenges" name="Challenges" value="Challenges">
+                        <label for="Challenges">Challenges</label>
+                    </div>
+
+                    <div class="row-item">
+                        <input type="checkbox" id="Open Source Community" name="Open Source Community" value="Open Source Community">
+                        <label for="Open Source Community">Open Source Community</label>
+                    </div>
+
+                    <div class="row-item">
+                        <input type="checkbox" id="Gitter help rooms" name="Gitter help rooms" value="Gitter help rooms">
+                        <label for="Gitter help rooms">Gitter help rooms</label>
+                    </div>
+
+                    <div class="row-item">
+                        <input type="checkbox" id="Videos" name="Videos" value="Videos">
+                        <label for="Videos">Videos</label>
+                    </div>
+
+                    <div class="row-item">
+                        <input type="checkbox" id="City Meetups" name="City Meetups" value="City Meetups">
+                        <label for="City Meetups">City Meetups</label>
+                    </div>
+
+                    <div class="row-item">
+                        <input type="checkbox" id="Wiki" name="Wiki" value="Wiki">
+                        <label for="Wiki">Wiki</label>
+                    </div>
+
+                    <div class="row-item">
+                        <input type="checkbox" id="Forum" name="Forum" value="Forum">
+                        <label for="Forum">Forum</label>
+                    </div>
+                    
+                    <div class="row-item">
+                        <input type="checkbox" id="Additional Courses" name="Additional Courses" value="Additional Courses">
+                        <label for="Additional Courses">Additional Courses</label>
+                    </div>
+                </div>
+            </div>
+
+                <div class="text-area">
+                    <label for="area">Any Comments or Suggestions?</label>
+                    <textarea id="area" name="area">Enter your comment here...
+                    </textarea>
+                </div>
+
+                <div class="button">
+                    <button id="submit">Submit</button>
+                </div>
+
+
+            </div>
+
         </form>
-
-
-
-            <p>Aute in excepteur id irure eiusmod dolor labore dolor. Commodo reprehenderit ea enim nulla pariatur proident deserunt. Consectetur officia excepteur deserunt non enim anim ut incididunt voluptate aute. Consectetur quis officia proident elit exercitation excepteur irure qui exercitation cupidatat cupidatat nisi officia.
-
-Tempor excepteur aliquip enim aute tempor eu nulla consectetur sunt. Nostrud mollit proident est quis minim anim nulla id minim nisi est magna adipisicing laborum. Irure adipisicing reprehenderit officia commodo ex.
-
-Do amet anim sint amet tempor fugiat esse id ullamco fugiat. Cillum elit ea excepteur deserunt reprehenderit culpa id id Lorem sit ea. Non veniam voluptate sunt eu eu eu. Irure ipsum officia consequat ipsum magna minim id.
-
-Adipisicing officia qui quis esse id proident aute. Tempor sit nisi culpa adipisicing cupidatat eiusmod adipisicing Lorem magna in aute. Sint pariatur nisi ex occaecat aute.
-
-Non duis veniam dolore cillum excepteur proident fugiat tempor esse consequat id quis dolore. Amet eu excepteur reprehenderit sint minim ea officia et ad amet laboris officia. Elit anim cupidatat labore veniam ex minim ut Lorem laboris est id nostrud. Nulla nulla sunt exercitation dolore quis cupidatat ipsum ea ipsum exercitation tempor.
-
-Laboris proident labore nulla dolore amet laborum laboris incididunt est officia duis. Anim ad Lorem pariatur aliquip culpa ipsum. Ullamco incididunt sint incididunt et velit non ad pariatur duis ut sint deserunt veniam. Aute sit aliquip proident veniam excepteur mollit irure laborum. Aliquip cillum sit pariatur tempor. Et velit sint aliquip excepteur. Cillum sit aliquip ex do enim ea eiusmod ea dolore minim esse commodo.
-
-Ipsum ea ullamco consectetur irure cillum sit mollit. Eu aute ad enim in duis dolore et dolor voluptate aliquip mollit eiusmod culpa sit. Do veniam mollit laborum eiusmod et ullamco.</p>
         </div>
     </div>
 
-
+</div>
     
 </body>
 </html>
